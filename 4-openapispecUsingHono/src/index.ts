@@ -3,6 +3,9 @@ import { createRoute } from "@hono/zod-openapi";
 import { OpenAPIHono } from "@hono/zod-openapi";
 import { Hono } from "hono";
 import { swaggerUI } from "@hono/swagger-ui";
+import { DefaultService } from "../../../generated";
+const service = new DefaultService();
+const response = await DefaultService.getUsers("1");
 
 const ParamsSchema = z.object({
   id: z
