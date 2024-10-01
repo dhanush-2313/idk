@@ -1,7 +1,10 @@
 import { GameManager, Game } from "./store";
 import { startLogger } from "./logger";
 
-const gameManager = new GameManager();
+// Get the singleton instance of GameManager
+const gameManager = GameManager.getInstance();
+
+// Start the logger with the gameManager instance
 startLogger(gameManager);
 
 setInterval(() => {
