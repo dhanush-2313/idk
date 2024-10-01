@@ -5,6 +5,12 @@ class GameManager {
     constructor() {
         this.games = [];
     }
+    static getInstance() {
+        if (!GameManager.instance) {
+            GameManager.instance = new GameManager();
+        }
+        return GameManager.instance;
+    }
     addGame(game) {
         this.games.push(game);
     }
@@ -13,9 +19,7 @@ class GameManager {
     }
     addMove(gameId, move) {
         const game = this.games.find((game) => game.id === gameId);
-        if (game) {
-            game.moves.push(move);
-        }
+        game === null || game === void 0 ? void 0 : game.moves.push(move);
     }
     logState() {
         console.log(this.games);
